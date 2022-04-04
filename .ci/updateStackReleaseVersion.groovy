@@ -17,7 +17,7 @@
 
 import groovy.transform.Field
 
-@Library('apm@main') _
+@Library('apm@test/use-edge') _
 
 // To store the next and current release versions
 @Field def releaseVersions = [:]
