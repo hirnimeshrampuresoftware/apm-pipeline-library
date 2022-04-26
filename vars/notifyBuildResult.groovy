@@ -142,6 +142,7 @@ def call(Map args = [:]) {
 def notifyCommentWithCoverageReport() {
   catchError(message: 'There were some failures when notifying the coverage report', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
     def coverageFile = "tests-coverage.json"
+    sh 'echo "tests-coverage.json" > tests-coverage.json'
     if (fileExists(coverageFile)) {
       generateReport(id: 'coverage', input: coverageFile, output: 'build', template: true, compare: true)
       def coverageContent = readFile(file: 'build/coverage.md')
