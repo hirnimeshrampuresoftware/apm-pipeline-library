@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-@Library('apm@main') _
+@Library('apm@test/suppport-coverage-file-test') _
 
 pipeline {
   agent { label 'linux && immutable' }
@@ -69,6 +69,7 @@ pipeline {
       }
     }
     stage('Check Licenses') {
+      when { expression { return false } }
       steps {
         withGithubNotify(context: 'Check Licenses') {
           deleteDir()
@@ -86,6 +87,7 @@ pipeline {
       }
     }
     stage('Check pre-commit') {
+      when { expression { return false } }
       steps {
         withGithubNotify(context: 'Check pre-commit', tab: 'tests') {
           deleteDir()
@@ -97,6 +99,7 @@ pipeline {
       }
     }
     stage('Build') {
+      when { expression { return false } }
       steps {
         withGithubNotify(context: 'Build', description: 'Build') {
           deleteDir()
@@ -112,6 +115,7 @@ pipeline {
       }
     }
     stage('Test') {
+      when { expression { return false } }
       steps {
         withGithubNotify(context: 'Test', description: 'UTs', tab: 'tests') {
           dir("${BASE_DIR}"){
@@ -173,6 +177,7 @@ pipeline {
       }
     }
     stage('Check Pipelines') {
+      when { expression { return false } }
       steps {
         withGithubNotify(context: 'Check Pipelines') {
           dir("${BASE_DIR}"){

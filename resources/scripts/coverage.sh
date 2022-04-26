@@ -31,7 +31,7 @@ REPORT_FOLDER=${2:?'Missing the output folder'}
 # shellcheck disable=SC2034
 INPUT=${3:?'Missing the input files to query for'}
 COMPARE_TO=${4:-''}
-
+COMPARE_TO='compare.json'
 # Function to add the previous metrics for the given coverage id
 # if there is something to compare with.
 function addPreviousValueIfPossible() {
@@ -67,7 +67,7 @@ if [ -z "${JQ}" ]; then
     else
         suffix=osx-amd64
     fi
-    wget -q -O "${JQ}" https://github.com/stedolan/jq/releases/download/jq-1.6/jq-${suffix}
+    wget -q --retry-connrefused -O "${JQ}" https://github.com/stedolan/jq/releases/download/jq-1.6/jq-${suffix}
     chmod 755 "${JQ}"
 else
     echo "1..3 install jq is not required"
@@ -78,6 +78,12 @@ echo "2..3 prepare a temporary folder"
 mkdir -p "${REPORT_FOLDER}"
 
 REPORT=${REPORT_FOLDER}/${NAME}.json
+
+curl -s 'https://apm-ci.elastic.co/job/apm-agent-python/job/apm-agent-python-mbp/view/tags/job/v6.6.1/1/cobertura/api/json?tree=results\[elements\[name,ratio,denominator,numerator\]\]&depth=3' | \
+  jq '.results.elements | reduce to_entries[] as $o ({}; .[$o.value.name] += { ratio: $o.value.ratio, numerator: $o.value.numerator, denominator: $o.value.denominator})' > "${INPUT}"
+
+curl -s 'https://apm-ci.elastic.co/job/apm-agent-python/job/apm-agent-python-mbp/view/tags/job/main/lastBuild/cobertura/api/json?tree=results\[elements\[name,ratio,denominator,numerator\]\]&depth=3' |  \
+  jq '.results.elements | reduce to_entries[] as $o ({}; .[$o.value.name] += { ratio: $o.value.ratio, numerator: $o.value.numerator, denominator: $o.value.denominator})' > "${COMPARE_TO}"
 
 # It uses the API cobertura/api/json, therefore there is only one file
 cp "${INPUT}" "${REPORT}"
