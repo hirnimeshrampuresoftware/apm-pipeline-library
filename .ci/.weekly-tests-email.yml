@@ -14,23 +14,6 @@
 ##  The automation will resolve the correct version at runtime, so you don't need to change it.
 ##
 projects:
-  - repo: beats
-    branches:
-      - main
-      - 8.<next-minor>
-      - 8.<minor>
-      - 8.<minor-1>
-      - 7.<minor>
-    enabled: true
-    email: victor.martinez@elastic.co
-  - repo: elastic-agent
-    branches:
-      - main
-      - 8.<next-minor>
-      - 8.<minor>
-      - 8.<minor-1>
-    enabled: true
-    email: beats-contrib@elastic.co
   - repo: e2e-testing
     branches:
       - main
