@@ -41,8 +41,14 @@ pipeline {
     booleanParam(name: 'DRY_RUN_MODE', defaultValue: false, description: 'If true, allows to execute this pipeline in dry run mode.')
   }
   stages {
+    stage('test') {
+      steps {
+        sleep 10
+      }
+    }
     stage('Top failing Tests - last 7 days') {
       steps {
+        sleep 10
         setEnvVar('YYYY_MM_DD', new Date().format("yyyy-MM-dd", TimeZone.getTimeZone('UTC')))
         generateSteps()
       }
