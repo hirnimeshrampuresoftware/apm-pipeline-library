@@ -22,7 +22,7 @@ projects:
       - 8.<minor-1>
       - 7.<minor>
     enabled: true
-    email: beats-contrib@elastic.co
+    email: victor.martinez@elastic.co
   - repo: elastic-agent
     branches:
       - main
@@ -39,4 +39,4 @@ projects:
       - 8.<minor-1>
       - 7.<minor>
     enabled: true
-    email: observability-robots-internal@elastic.co
+    email: victor.martinez@elastic.co
