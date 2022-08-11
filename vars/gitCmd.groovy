@@ -28,7 +28,7 @@ def call(Map args = [:]) {
   }
   def cmd =  args.containsKey('cmd') ? args.cmd : error('gitCmd: cmd parameter is required')
   def gitArgs =  args.containsKey('args') ? args.args : ''
-  def credentialsId = (args.containsKey('credentialsId') && args.credentialsId.trim()) ? args.credentialsId : '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken'
+  def credentialsId = (args.containsKey('credentialsId') && args.credentialsId.trim()) ? args.credentialsId : 'df4a32df-4aed-4113-a9df-e13515364217'
   def store = args.get('store', false)
   withCredentials([
     usernamePassword(
